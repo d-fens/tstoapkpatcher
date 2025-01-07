@@ -1,0 +1,13 @@
+---
+services:
+  patcher:
+    build: .
+    volumes:
+      - .:/apk
+    environment:
+      - APK_FILE=Tapped Out.apk
+      - SOURCE_OUTPUT=/apk/decompiled
+      - GAMESERVER_URL=https://tsto.t.n00b.ie
+      - DIRECTOR_URL=https://tsto.t.n00b.ie
+      - DLC_URL=https://tsto.t.n00b.ie/static
+      - APK_SHA256SUM=
