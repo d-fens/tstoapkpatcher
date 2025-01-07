@@ -5,10 +5,6 @@ import binascii
 import hashlib
 import r2pipe
 
-"""
-9eae61f7ae7ae3a8880809e7ffab33e5ae63582d6ad2d941d539d65639a6a47a  decompiled/lib/armeabi-v7a/libscorpio.so
-"""
-
 new_url = os.environ['DLC_URL']
 buffer_size = hex(len(new_url) + 1)
 string_size = hex(len(new_url))
@@ -45,6 +41,23 @@ patching_rules = {
       "wa mov w0,%s @ 0x012cc6fc" % (buffer_size),
       "wa add x9,x0,%s @ 0x012cc72c" % (buffer_size),
       "wa add x0,x0,%s @ 0x012cc76c" % (string_size),
+    ]
+  },
+  '9eae61f7ae7ae3a8880809e7ffab33e5ae63582d6ad2d941d539d65639a6a47a': {
+    'name': 'lib/armeabi-v7a/libscorpio.so',
+    'checks': [
+      "px 90 @ 0x00300c08",
+      "pd 1 @ 0x011c1398",
+      "pd 1 @ 0x011c13c8",
+      "pd 1 @ 0x011c13e4",
+      "pd 1 @ 0x011c13f4",
+    ],
+    'patches': [
+      "w %s @ 0x00300c08" % str(new_url),
+      "wa mov r0,%s @ 0x011c1398" % (buffer_size),
+      "wa add r0,r5,%s @ 0x011c13c8" % (buffer_size),
+      "wa mov r2,%s @ 0x011c13e4" % (string_size),
+      "wa add r0,r5,%s @ 0x011c13f4" % (string_size),
     ]
   },
   '7f4d355773c8a7328c9ee405f11b8795ca95fd2dbf7755fa686ea900593cbee3': {
