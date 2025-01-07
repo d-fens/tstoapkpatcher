@@ -6,7 +6,6 @@ import hashlib
 import r2pipe
 
 """
-8137faf7a4349043e6e0b0516249c673eb402cf96012c87d805c969cdccae3c2  decompiled/lib/arm64-v8a/libscorpio.so
 9eae61f7ae7ae3a8880809e7ffab33e5ae63582d6ad2d941d539d65639a6a47a  decompiled/lib/armeabi-v7a/libscorpio.so
 """
 
@@ -18,6 +17,21 @@ print("URL buffer size: %s, URL string size: %s" % (buffer_size, string_size))
 # for patching use ghidra and check the functions used for accessing the DLC URL
 # patching is required for the string allocations to ensure that the correct buffer size is copied
 patching_rules = {
+  '8137faf7a4349043e6e0b0516249c673eb402cf96012c87d805c969cdccae3c2': {
+    'name': 'lib/arm64-v8a/libscorpio.so',
+    'checks': [
+      "px 90 @ 0x00373230",
+      "pd 1 @ 0x012cd644",
+      "pd 1 @ 0x012cd674",
+      "pd 1 @ 0x012cd6b4",
+    ],
+    'patches': [
+      "w %s @ 0x00373230" % str(new_url),
+      "wa mov w0,%s @ 0x012cd644" % (buffer_size),
+      "wa add x9,x0,%s @ 0x012cd674" % (buffer_size),
+      "wa add x9,x0,%s @ 0x012cd6b4" % (string_size),
+    ]
+  },
   '5b6bf2e4ee386a825e58c3e12aae923d66db8b6fbdd21df05b81b4e1edeb44ae': {
     'name': 'lib/arm64-v8a/libscorpio-neon.so',
     'checks': [
