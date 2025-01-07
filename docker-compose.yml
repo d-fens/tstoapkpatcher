@@ -1,0 +1,13 @@
+---
+services:
+  patcher:
+    build: .
+    volumes:
+      - .:/apk
+    environment:
+      - APK_FILE=Tapped Out.apk
+      - SOURCE_OUTPUT=/apk/decompiled
+      - GAMESERVER_URL=http://1.2.3.4:9000
+      - DIRECTOR_URL=ttp://1.2.3.4:9000
+      - DLC_URL=ttp://1.2.3.4:9000/static
+      - APK_SHA256SUM=
