@@ -10,6 +10,14 @@ buffer_size = hex(len(new_url) + 1)
 string_size = hex(len(new_url))
 print("URL buffer size: %s, URL string size: %s" % (buffer_size, string_size))
 
+# tjac and myself had discussed and tried to fix the below arm64 seperately.
+# this was my simple solution to the issue at the time but we both sunk too much
+# time into solving it the correct way. feel free to solve the 64 piece for the load/stores
+# but be aware it may be a challenging time sink.
+excess_padding = '/' * (89 - len(new_url))
+arm_64_bit_url = new_url + excess_padding
+print("ARM64 URL: " % (arm_64_bit_url))
+
 # for patching use ghidra and check the functions used for accessing the DLC URL
 # patching is required for the string allocations to ensure that the correct buffer size is copied
 patching_rules = {
@@ -22,10 +30,10 @@ patching_rules = {
       "pd 1 @ 0x012cd6b4",
     ],
     'patches': [
-      "w %s @ 0x00373230" % str(new_url),
-      "wa mov w0,%s @ 0x012cd644" % (buffer_size),
-      "wa add x9,x0,%s @ 0x012cd674" % (buffer_size),
-      "wa add x9,x0,%s @ 0x012cd6b4" % (string_size),
+      "w %s @ 0x00373230" % str(arm_64_bit_url),
+      #"wa mov w0,%s @ 0x012cd644" % (buffer_size),
+      #"wa add x9,x0,%s @ 0x012cd674" % (buffer_size),
+      #"wa add x9,x0,%s @ 0x012cd6b4" % (string_size),
     ]
   },
   '5b6bf2e4ee386a825e58c3e12aae923d66db8b6fbdd21df05b81b4e1edeb44ae': {
@@ -37,10 +45,10 @@ patching_rules = {
       "pd 1 @ 0x012cc76c",
     ],
     'patches': [
-      "w %s @ 0x00373227" % str(new_url),
-      "wa mov w0,%s @ 0x012cc6fc" % (buffer_size),
-      "wa add x9,x0,%s @ 0x012cc72c" % (buffer_size),
-      "wa add x0,x0,%s @ 0x012cc76c" % (string_size),
+      "w %s @ 0x00373227" % str(arm_64_bit_url),
+      #"wa mov w0,%s @ 0x012cc6fc" % (buffer_size),
+      #"wa add x9,x0,%s @ 0x012cc72c" % (buffer_size),
+      #"wa add x0,x0,%s @ 0x012cc76c" % (string_size),
     ]
   },
   '9eae61f7ae7ae3a8880809e7ffab33e5ae63582d6ad2d941d539d65639a6a47a': {
