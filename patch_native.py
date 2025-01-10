@@ -16,7 +16,7 @@ print("URL buffer size: %s, URL string size: %s" % (buffer_size, string_size))
 # but be aware it may be a challenging time sink.
 excess_padding = '/' * (89 - len(new_url))
 arm_64_bit_url = new_url + excess_padding
-print("ARM64 URL: " % (arm_64_bit_url))
+print("ARM64 URL: %s" % (arm_64_bit_url))
 
 # for patching use ghidra and check the functions used for accessing the DLC URL
 # patching is required for the string allocations to ensure that the correct buffer size is copied
