@@ -5,7 +5,12 @@ import binascii
 import hashlib
 import r2pipe
 
+# get the variable and make sure it ends in "/"
+# we want to have it align to the same as existing on for URL joins
 new_url = os.environ['DLC_URL']
+if not new_url.endswith("/"):
+  new_url = new_url + "/"
+
 buffer_size = hex(len(new_url) + 1)
 string_size = hex(len(new_url))
 print("URL buffer size: %s, URL string size: %s" % (buffer_size, string_size))
