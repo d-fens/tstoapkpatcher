@@ -27,5 +27,6 @@ echo "Signing APK"
 
 echo "Generating proto files (development)"
 mkdir -p /apk/proto
+mkdir -p google/protobuf/
 /app/protodec/protodec --grab /apk/decompiled/lib/arm64-v8a/libscorpio.so
 mv *.proto /apk/proto
