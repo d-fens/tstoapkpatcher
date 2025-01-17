@@ -233,7 +233,7 @@ for f in attempt_files_to_patch:
         else:
             print("BAD: couldn't find DLC checks to perform against ", f)
 
-        if 'PATCH_AUTH_HEADERS' in os.environ and os.environ["PATCH_AUTH_HEADERS"]
+        if 'PATCH_AUTH_HEADERS' in os.environ and os.environ["PATCH_AUTH_HEADERS"]:
             if hash.hexdigest() in header_patching_rules:
                 patch_rule = header_patching_rules[hash.hexdigest()]
                 print("Attempt: ", patch_rule["name"], f)
